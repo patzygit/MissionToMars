@@ -1,10 +1,14 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
+import static java.util.Comparator.comparing;
+
 public class Simulation {
+    private ArrayList<Rocket> fleetU1;
+    private ArrayList<Rocket> fleetU2;
 
     public Simulation(){
 
@@ -26,6 +30,7 @@ public class Simulation {
         catch (FileNotFoundException e){
             e.printStackTrace();
         }
+
         return listItems;
     }
 
@@ -42,16 +47,20 @@ public class Simulation {
     * It first tries to fill up 1 rocket with as many items as possible before creating a new rocket object
      * and filling that one until all items are loaded.
      * The method then returns the ArrayList of those U1 rockets that are fully loaded.*/
-    public void loadU1(ArrayList<Item> items){
-        U1 rocketU1 = new U1();
-        //load all U1 rockets that we can
+    public ArrayList<Rocket> loadU1(ArrayList<Item> items){
+        fleetU1 = new ArrayList<>();
+        Rocket u1 = new U1(100,18000, 10000);
+        for (Item item:items){
+            System.out.println(item.getName() + item.getWeight());
+        }
+        return fleetU1;
     }
 
     /*this method also takes the ArrayList of Items and starts creating U2 rockets
      and filling them with those items the same way as with U1 until all items are loaded.
      The method then returns the ArrayList of those U2 rockets that are fully loaded.*/
     public void loadU2(ArrayList<Item> items){
-        U2 rocketU2 = new U2();
+        //U2 rocketU2 = new U2();
         //load all U1 rockets that we can
     }
 
