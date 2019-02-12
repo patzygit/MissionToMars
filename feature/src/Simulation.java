@@ -49,9 +49,15 @@ public class Simulation {
      * The method then returns the ArrayList of those U1 rockets that are fully loaded.*/
     public ArrayList<Rocket> loadU1(ArrayList<Item> items){
         fleetU1 = new ArrayList<>();
-        Rocket u1 = new U1(100,18000, 10000);
-        for (Item item:items){
-            System.out.println(item.getName() + item.getWeight());
+        Rocket u1 = new U1(100,18000,10000);
+        for (int i = 0; i < items.size(); i++){
+            if (u1.canCarry(items.get(i))){
+                u1.carry(items.get(i));
+            }
+            else {
+                fleetU1.add(u1);
+                u1 = new U1(100,18000,10000);
+            }
         }
         return fleetU1;
     }

@@ -14,9 +14,10 @@ public class Main {
             System.out.println("Phase 1 and Phase 2 values loaded");
 
             //load U1s -> load a fleet of U1 rockets for phase 1
-            Collections.sort(phase1Values, comparing(Item::getWeight));
+            Collections.sort(phase1Values, comparing(Item::getWeight).reversed());
             ArrayList<Rocket> fleetU1 = simulation.loadU1(phase1Values);
-            System.out.println("Numero de naves " + fleetU1.size());
+            System.out.println("numero de naves" + fleetU1.size());
+
         }
         catch (FileNotFoundException exception){
             exception.printStackTrace();
