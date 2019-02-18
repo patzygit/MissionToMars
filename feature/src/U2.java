@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class U2 extends Rocket{
     /*
     Rocket cost = $120 Million
@@ -7,17 +9,36 @@ public class U2 extends Rocket{
     Chance of landing crash = 8% * (cargo carried / cargo limit)
     * */
 
-    public U2(int u1cost, int u1Capacity, int u1Weigt){
-        super(u1cost, u1Capacity, u1Weigt);
+    public U2(){
+        super(120, 29000, 18000);
     }
 
     @Override
+    //Chance of landing crash = 8% * (cargo carried / cargo limit)
     public boolean land(){
-        return true;
+    	double chanceCrash =  0.08*(getRocketCurrentWeight() / getRocketCapacity());  
+    	 if (generateRandom() >= chanceCrash){
+             return false;
+         }
+         else return true;
     }
 
     @Override
+    //Chance of launch explosion = 4% * (cargo carried / cargo limit)
     public boolean launch(){
-        return true;
+    	double chanceExplosion = 0.04*(getRocketCurrentWeight() / getRocketCapacity());
+        if (generateRandom() >= chanceExplosion){
+            return false;
+        }
+        else return true;
     }
+
+
+    //Generate a random number
+    public double generateRandom(){
+        Random random = new Random();
+        double randomValue = 0 + (1 - 0) * random.nextDouble();
+        return randomValue;
+    }
+	
 }

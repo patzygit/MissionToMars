@@ -1,4 +1,6 @@
-public class Rocket implements SpaceShip{
+import java.util.ArrayList;
+
+public abstract class Rocket implements SpaceShip{
     /*
     launch and land methods in the Rocket class should always return true.
     When U1 and U2 classes extend the Rocket class they will override these methods
@@ -7,22 +9,19 @@ public class Rocket implements SpaceShip{
     private int rocketCost;
     private int rocketCapacity;
     private int rocketCurrentWeight;
+    private ArrayList<Item> itemList;
 
     public Rocket(int rocketCost, int rocketCapacity, int rocketCurrentWeight){
         this.rocketCost = rocketCost;
         this.rocketCapacity = rocketCapacity;
         this.rocketCurrentWeight = rocketCurrentWeight;
+        itemList = new ArrayList<Item>();
     }
 
-    @Override
-    public boolean launch(){
-        return true;
-    }
 
-    @Override
-    public boolean land(){
-        return true;
-    }
+    public abstract boolean launch();
+
+    public abstract boolean land();
 
     /*
     carry and canCarry should be implemented here and will not need to be overridden in the U1 and U2 classes
@@ -31,26 +30,40 @@ public class Rocket implements SpaceShip{
     /*canCarry: a method that takes an Item as an argument and returns true if the rocket can carry such item
     or false if it will exceed the weight limit.*/
     public boolean canCarry(Item item){
-        int newRocketWeight = rocketCurrentWeight + item.getWeight();
-        if (newRocketWeight <= rocketCapacity){
-            return true;
+        int newRocketWeight = getRocketCurrentWeight() + item.getWeight();
+        boolean hasCapacity= false;
+        if (newRocketWeight <= getRocketCapacity()){
+        	hasCapacity = true;
         }
-        else{
-            return false;
-        }
+               
+        return hasCapacity;
     }
 
     @Override
     public void carry(Item item){
-        rocketCurrentWeight = rocketCurrentWeight + item.getWeight();
+        int newWeight = rocketCurrentWeight + item.getWeight();
+        setRocketCurrentWeight(newWeight);
     }
 
     public int getRocketCurrentWeight(){
         return rocketCurrentWeight;
     }
+    
+    public int getRocketCapacity() {
+    	return rocketCapacity;
+    }
+
+    public void setRocketCurrentWeight(int weight){
+        rocketCurrentWeight = weight;
+    }
 
     public int getRocketCost(){
         return rocketCost;
+    }
+    
+    public void addItem(Item item) {
+    	itemList.add(item);
+    	carry(item);
     }
 
 }
