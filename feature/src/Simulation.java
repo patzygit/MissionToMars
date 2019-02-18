@@ -116,6 +116,9 @@ public class Simulation {
             fleetU2 = loadU2(phase2Values);
             System.out.println("Numero de naves phase2 - u1: " + fleetU1.size());
             System.out.println("Numero de naves phase2 - u2: " + fleetU2.size());
+            budgetByFleet(fleetU1);
+            budgetByFleet(fleetU2);
+            System.out.println("finish");
         }
         catch (FileNotFoundException exception){
             exception.printStackTrace();
@@ -127,14 +130,14 @@ public class Simulation {
     	int budget = 0;
         for(int i =0; i<fleet.size();i++) {
         	budget = fleet.get(i).getRocketCost();
-        	System.out.println("innitial required budget: " + budget);
         	while (fleet.get(i).launch()) {
         		budget = budget + fleet.get(i).getRocketCost();
-        		System.out.println("stoped");
+        		System.out.println("Crashed");
         	}
         	
         	while (fleet.get(i).land()) {
         		budget = budget + fleet.get(i).getRocketCost();
+        		System.out.println("Exploded");
         	}
         	System.out.println("required budget: " + budget);
         	budget = 0;
