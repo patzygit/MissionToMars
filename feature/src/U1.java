@@ -17,7 +17,7 @@ public class U1 extends Rocket{
     @Override
     //Chance of landing crash = 1% * (cargo carried / cargo limit)
     public boolean land(){
-        double chanceCrash =  0.01*(getRocketCurrentWeight() / getRocketCapacity());        
+        double chanceCrash =  0.01*((double)getRocketCurrentWeight() / (double)getRocketCapacity());        
         if (generateRandom() >= chanceCrash){
             return false;
         }
@@ -27,7 +27,7 @@ public class U1 extends Rocket{
     @Override
     //Chance of launch explosion = 5% * (cargo carried / cargo limit)
     public boolean launch(){
-        double chanceExplosion = 0.05*(getRocketCurrentWeight() / getRocketCapacity());
+        double chanceExplosion = 0.05*((double)getRocketCurrentWeight() / (double)getRocketCapacity());
         if (generateRandom() >= chanceExplosion){
             return false;
         }
