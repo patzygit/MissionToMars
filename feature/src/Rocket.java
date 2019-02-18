@@ -30,9 +30,9 @@ public abstract class Rocket implements SpaceShip{
     /*canCarry: a method that takes an Item as an argument and returns true if the rocket can carry such item
     or false if it will exceed the weight limit.*/
     public boolean canCarry(Item item){
-        int newRocketWeight = rocketCurrentWeight + item.getWeight();
+        int newRocketWeight = getRocketCurrentWeight() + item.getWeight();
         boolean hasCapacity= false;
-        if (newRocketWeight <= rocketCapacity){
+        if (newRocketWeight <= getRocketCapacity()){
         	hasCapacity = true;
         }
                
@@ -41,7 +41,8 @@ public abstract class Rocket implements SpaceShip{
 
     @Override
     public void carry(Item item){
-        rocketCurrentWeight = rocketCurrentWeight + item.getWeight();
+        int newWeight = rocketCurrentWeight + item.getWeight();
+        setRocketCurrentWeight(newWeight);
     }
 
     public int getRocketCurrentWeight(){
@@ -52,6 +53,10 @@ public abstract class Rocket implements SpaceShip{
     	return rocketCapacity;
     }
 
+    public void setRocketCurrentWeight(int weight){
+        rocketCurrentWeight = weight;
+    }
+
     public int getRocketCost(){
         return rocketCost;
     }
@@ -59,7 +64,6 @@ public abstract class Rocket implements SpaceShip{
     public void addItem(Item item) {
     	itemList.add(item);
     	carry(item);
-    	
     }
 
 }
