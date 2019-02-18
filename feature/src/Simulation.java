@@ -104,20 +104,24 @@ public class Simulation {
             Collections.sort(phase1Values, comparing(Item::getWeight));
             fleetU1 = loadU1(phase1Values);
             fleetU2 = loadU2(phase1Values);
-            System.out.println("Numero de naves phase1 - u1: " + fleetU1.size());
-            System.out.println("Numero de naves phase1 - u2: " + fleetU2.size());
-            budgetByFleet(fleetU1);
-            budgetByFleet(fleetU2);
+            System.out.println("Number of Rocket phase 1 - u1: " + fleetU1.size());
+            System.out.println("Number of Rocket phase 1 - u2: " + fleetU2.size());
+            System.out.println("Simulating U1s phase 1");
+            System.out.println("Total budget is: " + budgetByFleet(fleetU1) + " Millions");
+            System.out.println("Simulating U2s phase 1");
+            System.out.println("Total budget is: " + budgetByFleet(fleetU2) + " Millions");
             System.out.println("finish");
             
           //load U1s,U2s -> load a fleet of U1 rockets for phase 2
             Collections.sort(phase2Values, comparing(Item::getWeight));
             fleetU1 = loadU1(phase2Values);
             fleetU2 = loadU2(phase2Values);
-            System.out.println("Numero de naves phase2 - u1: " + fleetU1.size());
-            System.out.println("Numero de naves phase2 - u2: " + fleetU2.size());
-            budgetByFleet(fleetU1);
-            budgetByFleet(fleetU2);
+            System.out.println("Number of Rocket phase2 - u1: " + fleetU1.size());
+            System.out.println("Number of Rocket phase2 - u2: " + fleetU2.size());
+            System.out.println("Simulating U1s phase 2");
+            System.out.println("Total budget is: " + budgetByFleet(fleetU1) + " Millions");
+            System.out.println("Simulating U2s phase 2");
+            System.out.println("Total budget is: " + budgetByFleet(fleetU2) + " Millions");
             System.out.println("finish");
         }
         catch (FileNotFoundException exception){
@@ -126,23 +130,20 @@ public class Simulation {
     	
     }
     
-    public void budgetByFleet(ArrayList<Rocket> fleet) {
-    	int budget = 0;
+    public int budgetByFleet(ArrayList<Rocket> fleet) {
+    	int aux = 0;
         for(int i =0; i<fleet.size();i++) {
-        	budget = fleet.get(i).getRocketCost();
         	while (fleet.get(i).launch()) {
-        		budget = budget + fleet.get(i).getRocketCost();
         		System.out.println("Crashed");
+        		aux ++;
         	}
-        	
         	while (fleet.get(i).land()) {
-        		budget = budget + fleet.get(i).getRocketCost();
         		System.out.println("Exploded");
+        		aux ++;
         	}
-        	System.out.println("required budget: " + budget);
-        	budget = 0;
+        	System.out.println("rocket landed");
         }
-    	
-        
+        int totalBudget = (fleet.size() + aux) * fleet.get(1).getRocketCost();
+        return totalBudget;
     }
 }
