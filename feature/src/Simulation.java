@@ -18,8 +18,8 @@ public class Simulation {
     public ArrayList<Item> loadItems(String path) throws FileNotFoundException {
         ArrayList<Item> listItems = new ArrayList<>();
         try {
-            File filePath = new File(path);
-            Scanner scanner = new Scanner(filePath);
+            File file = new File(path);
+            Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()){
                 String itemString = scanner.nextLine();
                 Item item = loadItemObject(itemString);
@@ -52,10 +52,10 @@ public class Simulation {
         fleetU1.add(new U1());
         int r = 0;
         for(int i =0; i < items.size(); i++ ) {
-        	if(loadRocket(fleetU1.get(r),items.get(i))) {
+        	if(loadRocket(fleetU1.get(r), items.get(i))) {
         		fleetU1.add(new U1());
         		r++;
-        		loadRocket(fleetU1.get(r),items.get(i));
+        		loadRocket(fleetU1.get(r), items.get(i));
         	}
         }
         return fleetU1;
@@ -69,10 +69,10 @@ public class Simulation {
         fleetU2.add(new U2());
         int r = 0;
         for(int i =0; i < items.size(); i++ ) {
-        	if(loadRocket(fleetU2.get(r),items.get(i))) {
+        	if(loadRocket(fleetU2.get(r), items.get(i))) {
         		fleetU2.add(new U2());
         		r++;
-        		loadRocket(fleetU2.get(r),items.get(i));
+        		loadRocket(fleetU2.get(r), items.get(i));
         	}
         }
         return fleetU2;
@@ -100,22 +100,27 @@ public class Simulation {
             ArrayList<Item> phase2Values = loadItems("feature\\src\\data\\Phase2.txt");
             System.out.println("Phase 1 and Phase 2 values loaded");
 
-            //load U1s,U2s -> load a fleet of U1 rockets for phase 1
+            //load U1s, U2s -> load a fleet of U1 rockets for phase 1
             Collections.sort(phase1Values, comparing(Item::getWeight));
             fleetU1 = loadU1(phase1Values);
             fleetU2 = loadU2(phase1Values);
-            System.out.println("Numero de naves phase1 - u1: " + fleetU1.size());
-            System.out.println("Numero de naves phase1 - u2: " + fleetU2.size());
+            System.out.println("Number of u1s phase 1: " + fleetU1.size());
+            System.out.println("Number of u2s phase 1: " + fleetU2.size());
+
             budgetByFleet(fleetU1);
             budgetByFleet(fleetU2);
-            System.out.println("finish");
 
-          //load U1s,U2s -> load a fleet of U1 rockets for phase 2
+            //load U1s,U2s -> load a fleet of U1 rockets for phase 2
             Collections.sort(phase2Values, comparing(Item::getWeight));
             fleetU1 = loadU1(phase2Values);
             fleetU2 = loadU2(phase2Values);
-            System.out.println("Numero de naves phase2 - u1: " + fleetU1.size());
-            System.out.println("Numero de naves phase2 - u2: " + fleetU2.size());
+            System.out.println("Number of u1s phase 2: " + fleetU1.size());
+            System.out.println("Number of u2s phase 2: " + fleetU2.size());
+
+            budgetByFleet(fleetU1);
+            budgetByFleet(fleetU2);
+
+            System.out.println("finish");
         }
         catch (FileNotFoundException exception){
             exception.printStackTrace();
@@ -124,13 +129,14 @@ public class Simulation {
     }
 
     public void budgetByFleet(ArrayList<Rocket> fleet) {
+        System.out.println("este es el tamaño q entra: " + fleet.size());
     	int budget = 0;
-        for(int i =0; i<fleet.size();i++) {
+        for(int i = 0; i < fleet.size(); i++) {
         	budget = fleet.get(i).getRocketCost();
-        	System.out.println("innitial required budget: " + budget);
+        	System.out.println("initial required budget: " + budget);
         	while (fleet.get(i).launch()) {
         		budget = budget + fleet.get(i).getRocketCost();
-        		System.out.println("stoped");
+        		System.out.println("stopped");
         	}
 
         	while (fleet.get(i).land()) {
@@ -139,7 +145,5 @@ public class Simulation {
         	System.out.println("required budget: " + budget);
         	budget = 0;
         }
-
-
     }
 }
