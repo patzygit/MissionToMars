@@ -1,4 +1,6 @@
-public class Rocket implements SpaceShip{
+import java.util.ArrayList;
+
+public abstract class Rocket implements SpaceShip{
     /*
     launch and land methods in the Rocket class should always return true.
     When U1 and U2 classes extend the Rocket class they will override these methods
@@ -6,25 +8,20 @@ public class Rocket implements SpaceShip{
      */
     private int rocketCost;
     private int rocketCapacity;
-    private int rocketWeight;
-    private int cargo;
+    private int rocketCurrentWeight;
+    private ArrayList<Item> itemList;
 
-    public Rocket(int rocketCost, int rocketCapacity, int rocketWeight){
+    public Rocket(int rocketCost, int rocketCapacity, int rocketCurrentWeight){
         this.rocketCost = rocketCost;
         this.rocketCapacity = rocketCapacity;
-        this.rocketWeight = rocketWeight;
-        this.cargo = 0;
+        this.rocketCurrentWeight = rocketCurrentWeight;
+        itemList = new ArrayList<Item>();
     }
 
-    @Override
-    public boolean launch(){
-        return true;
-    }
 
-    @Override
-    public boolean land(){
-        return true;
-    }
+    public abstract boolean launch();
+
+    public abstract boolean land();
 
     /*
     carry and canCarry should be implemented here and will not need to be overridden in the U1 and U2 classes
@@ -33,43 +30,36 @@ public class Rocket implements SpaceShip{
     /*canCarry: a method that takes an Item as an argument and returns true if the rocket can carry such item
     or false if it will exceed the weight limit.*/
     public boolean canCarry(Item item){
-        System.out.println("capacity" + getRocketCapacity());
-        System.out.println("weight" + getRocketWeight());
-        int maxCargo = getRocketCapacity() - getRocketWeight();
-        if ((maxCargo >= getCargo()) && (maxCargo >= item.getWeight())){
-            System.out.println("entro");
-            return true;
+        int newRocketWeight = rocketCurrentWeight + item.getWeight();
+        boolean hasCapacity= false;
+        if (newRocketWeight <= rocketCapacity){
+        	hasCapacity = true;
         }
-        else {
-            return false;
-        }
+
+        return hasCapacity;
     }
 
     @Override
     public void carry(Item item){
-        int newValue = getCargo() + item.getWeight();
-        setCargo(newValue);
+        rocketCurrentWeight = rocketCurrentWeight + item.getWeight();
+    }
+
+    public int getRocketCurrentWeight(){
+        return rocketCurrentWeight;
+    }
+
+    public int getRocketCapacity() {
+    	return rocketCapacity;
     }
 
     public int getRocketCost(){
         return rocketCost;
     }
 
-    public int getRocketWeight(){
-        return rocketWeight;
-    }
+    public void addItem(Item item) {
+    	itemList.add(item);
+    	carry(item);
 
-    public int getRocketCapacity(){
-        return rocketCapacity;
-    }
-
-    public int getCargo(){
-        return cargo;
-    }
-
-    public void setCargo(int cargo){
-        System.out.println("setting cargo " + cargo);
-        this.cargo = cargo;
     }
 
 }
