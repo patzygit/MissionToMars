@@ -16,7 +16,7 @@ public class U2 extends Rocket{
     @Override
     //Chance of landing crash = 8% * (cargo carried / cargo limit)
     public boolean land(){
-    	double chanceCrash =  0.08*(getRocketCurrentWeight() / getRocketCapacity());  
+    	double chanceCrash =  0.08*((double)getRocketCurrentWeight() / (double)getRocketCapacity());  
     	 if (generateRandom() >= chanceCrash){
              return false;
          }
@@ -26,7 +26,7 @@ public class U2 extends Rocket{
     @Override
     //Chance of launch explosion = 4% * (cargo carried / cargo limit)
     public boolean launch(){
-    	double chanceExplosion = 0.04*(getRocketCurrentWeight() / getRocketCapacity());
+    	double chanceExplosion = (0.04*(double)getRocketCurrentWeight() / (double)getRocketCapacity());
         if (generateRandom() >= chanceExplosion){
             return false;
         }
